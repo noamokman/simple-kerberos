@@ -1,0 +1,55 @@
+{
+  "name": "simple-kerberos",
+  "version": "0.0.0",
+  "description": "Kerberos for web servers made simple",
+  "main": "lib/index.js",
+  "scripts": {
+    "prepublish": "gulp build",
+    "test": "gulp test",
+    "coveralls": "gulp coveralls"
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "gulp eslint"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noamokman/simple-kerberos.git"
+  },
+  "keywords": [
+    "kerberos",
+    "simple"
+  ],
+  "author": {
+    "name": "Noam Okman",
+    "email": "noamokman@gmail.com",
+    "url": "https://github.com/noamokman"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/noamokman/simple-kerberos/issues"
+  },
+  "homepage": "https://github.com/noamokman/simple-kerberos#readme",
+  "devDependencies": {
+    "babel-core": "^6.3.26",
+    "babel-eslint": "^4.1.6",
+    "babel-preset-es2015": "^6.3.13",
+    "del": "^2.2.0",
+    "eslint-config-noamokman": "^1.0.1",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^6.1.1",
+    "gulp-babel-istanbul": "^0.11.0",
+    "gulp-coveralls": "^0.1.4",
+    "gulp-eslint": "^1.1.1",
+    "gulp-if": "^2.0.0",
+    "gulp-mocha": "^2.2.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "merge-stream": "^1.0.0",
+    "run-sequence": "^1.1.5"
+  },
+  "dependencies": {
+    "kerberos": "0.0.18",
+    "pify": "^2.3.0"
+  }
+}
