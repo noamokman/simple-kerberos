@@ -4,7 +4,7 @@ import pify from 'pify';
 import kerberosModule from 'kerberos';
 const kerberos = new kerberosModule.Kerberos();
 
-const simpleKerberos = pify((token, cb) => {
+export default pify((token, cb) => {
   kerberos.authGSSServerInit('HTTP', (err, context) => {
     if (err) {
       return cb(err);
@@ -27,5 +27,3 @@ const simpleKerberos = pify((token, cb) => {
     });
   });
 });
-
-export default simpleKerberos;
