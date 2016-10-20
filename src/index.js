@@ -1,28 +1,27 @@
-'use strict';
-
 import pify from 'pify';
 import kerberosModule from 'kerberos';
+import SimpleKerberosError from './simple-kerberos-error';
 const kerberos = new kerberosModule.Kerberos();
 
 export default pify((token, cb) => {
   kerberos.authGSSServerInit('HTTP', (err, context) => {
     if (err) {
-      return cb(err);
+      return cb(new SimpleKerberosError('Simple Kerberos failed at "init" stage', err));
     }
 
     kerberos.authGSSServerStep(context, token, err => {
       if (err) {
-        return cb(err);
+        return cb(new SimpleKerberosError('Simple Kerberos failed at "step" stage', err));
       }
 
-      const principal = context.username;
+      const {username} = context;
 
       kerberos.authGSSServerClean(context, err => {
         if (err) {
-          return cb(err);
+          return cb(new SimpleKerberosError('Simple Kerberos failed at "clean" stage', err));
         }
 
-        cb(null, principal);
+        cb(null, username);
       });
     });
   });

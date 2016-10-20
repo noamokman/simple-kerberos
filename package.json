@@ -4,14 +4,17 @@
   "description": "Kerberos for web servers made simple",
   "main": "lib/index.js",
   "scripts": {
-    "prepublish": "gulp build",
-    "test": "gulp test",
-    "coveralls": "gulp coveralls"
-  },
-  "config": {
-    "ghooks": {
-      "pre-commit": "gulp eslint"
-    }
+    "prepublish": "npm run build",
+    "test": "npm run lint && babel-node ./node_modules/babel-istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha --report lcovonly --report text --report html -- --compilers js:babel-register test",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "lint": "run-p lint-*",
+    "lint-src": "eslint src --fix",
+    "lint-test": "eslint test --fix",
+    "precommit": "lint-staged",
+    "commitmsg": "validate-commit-msg",
+    "babel": "babel src -d lib -s",
+    "build": "rimraf lib && npm run babel",
+    "posttest": "babel-istanbul check-coverage --statements 100 --functions 100 --branches 100 --lines 100"
   },
   "repository": {
     "type": "git",
@@ -32,25 +35,35 @@
   },
   "homepage": "https://github.com/noamokman/simple-kerberos#readme",
   "devDependencies": {
-    "babel-core": "^6.3.26",
-    "babel-eslint": "^4.1.6",
-    "babel-preset-es2015": "^6.3.13",
-    "del": "^2.2.0",
-    "eslint-config-noamokman": "^1.0.1",
-    "ghooks": "^1.0.3",
-    "gulp": "^3.9.0",
-    "gulp-babel": "^6.1.1",
-    "gulp-babel-istanbul": "^0.11.0",
-    "gulp-coveralls": "^0.1.4",
-    "gulp-eslint": "^1.1.1",
-    "gulp-if": "^2.0.0",
-    "gulp-mocha": "^2.2.0",
-    "gulp-sourcemaps": "^1.6.0",
-    "merge-stream": "^1.0.0",
-    "run-sequence": "^1.1.5"
+    "babel-cli": "^6.16.0",
+    "babel-istanbul": "^0.11.0",
+    "babel-preset-env": "0.0.6",
+    "babel-register": "^6.16.3",
+    "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
+    "dirty-chai": "^1.2.2",
+    "eslint": "^3.8.1",
+    "eslint-config-noamokman": "^5.0.0",
+    "husky": "^0.11.9",
+    "lint-staged": "^3.2.0",
+    "mocha": "^3.1.2",
+    "mockery": "^2.0.0",
+    "npm-run-all": "^3.1.1",
+    "rimraf": "^2.5.4",
+    "validate-commit-msg": "^2.8.2"
   },
   "dependencies": {
-    "kerberos": "0.0.18",
+    "kerberos": "^0.0.21",
+    "nested-error-stacks": "^1.0.2",
     "pify": "^2.3.0"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   }
 }
