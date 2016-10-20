@@ -17,7 +17,9 @@ describe('simple-kerberos', () => {
     });
   });
 
-  describe('usage', () => {
+  describe('usage', function () {
+    this.timeout(5000);
+
     const getSimpleKerberos = errorStage => {
       mockery.disable();
       mockery.deregisterAll();
