@@ -1,6 +1,6 @@
 {
   "name": "simple-kerberos",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Kerberos for web servers made simple",
   "main": "lib/index.js",
   "scripts": {
