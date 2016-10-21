@@ -1,7 +1,17 @@
 import pify from 'pify';
-import kerberosModule from 'kerberos';
 import SimpleKerberosError from './simple-kerberos-error';
-const kerberos = new kerberosModule.Kerberos();
+
+let kerberos;
+
+try {
+  const kerberosModule = require('kerberos');
+
+  kerberos = new kerberosModule.Kerberos();
+}
+catch (err) {
+  throw new SimpleKerberosError('Simple Kerberos failed to load the "kerberos" module', err);
+}
+
 
 export default pify((token, cb) => {
   kerberos.authGSSServerInit('HTTP', (err, context) => {

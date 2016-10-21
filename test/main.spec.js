@@ -27,6 +27,11 @@ describe('simple-kerberos', () => {
       /* eslint-disable class-methods-use-this */
 
       class Kerberos {
+        constructor () {
+          if (errorStage === 'load') {
+            throw new Error('oops');
+          }
+        }
         authGSSServerInit (bla, cb) {
           if (errorStage === 'init') {
             return cb(new Error('oops'));
@@ -67,6 +72,10 @@ describe('simple-kerberos', () => {
     });
 
     describe('with errors', () => {
+      it('should reject on load', () => {
+        expect(() => getSimpleKerberos('load')).to.throw('Simple Kerberos failed to load the "kerberos" module');
+      });
+
       it('should reject on init stage', () => {
         const simpleKerberos = getSimpleKerberos('init');
 
