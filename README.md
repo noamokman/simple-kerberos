@@ -1,4 +1,4 @@
-# simple-kerberos [![Build Status](https://travis-ci.org/noamokman/simple-kerberos.svg?branch=master)](https://travis-ci.org/noamokman/simple-kerberos)
+# simple-kerberos [![Build Status](https://travis-ci.org/noamokman/simple-kerberos.svg?branch=master)](https://travis-ci.org/noamokman/simple-kerberos) [![Coverage Status](https://coveralls.io/repos/github/noamokman/simple-kerberos/badge.svg?branch=master)](https://coveralls.io/github/noamokman/simple-kerberos?branch=master)
 
 Kerberos for web servers made simple
 

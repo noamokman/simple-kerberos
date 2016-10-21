@@ -41,6 +41,7 @@
     "babel-register": "^6.16.3",
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
+    "coveralls": "^2.11.14",
     "dirty-chai": "^1.2.2",
     "eslint": "^3.8.1",
     "eslint-config-noamokman": "^5.0.1",
