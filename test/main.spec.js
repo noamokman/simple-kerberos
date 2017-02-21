@@ -8,69 +8,69 @@ chai.use(dirtyChai);
 
 const {expect} = chai;
 
-describe('simple-kerberos', () => {
-  describe('exports', () => {
-    const simpleKerberos = require('../src');
+describe('simple-kerberos', function () {
+  this.timeout(5000);
+  const getSimpleKerberos = errorStage => {
+    mockery.disable();
+    mockery.deregisterAll();
 
-    it('should expose a default function', () => {
-      expect(simpleKerberos.default).to.be.a('function');
-    });
-  });
+    /* eslint-disable class-methods-use-this */
 
-  describe('usage', function () {
-    this.timeout(5000);
-
-    const getSimpleKerberos = errorStage => {
-      mockery.disable();
-      mockery.deregisterAll();
-
-      /* eslint-disable class-methods-use-this */
-
-      class Kerberos {
-        constructor () {
-          if (errorStage === 'load') {
-            throw new Error('oops');
-          }
-        }
-        authGSSServerInit (bla, cb) {
-          if (errorStage === 'init') {
-            return cb(new Error('oops'));
-          }
-
-          cb(null, {username: 'user'});
-        }
-        authGSSServerStep (context, token, cb) {
-          if (errorStage === 'step') {
-            return cb(new Error('oops'));
-          }
-
-          cb();
-        }
-        authGSSServerClean (context, cb) {
-          if (errorStage === 'clean') {
-            return cb(new Error('oops'));
-          }
-
-          cb();
+    class Kerberos {
+      constructor () {
+        if (errorStage === 'load') {
+          throw new Error('oops');
         }
       }
 
-      /* eslint-enable class-methods-use-this */
+      authGSSServerInit (bla, cb) {
+        if (errorStage === 'init') {
+          return cb(new Error('oops'));
+        }
 
-      mockery.registerMock('kerberos', {Kerberos});
-      mockery.enable({
-        useCleanCache: true,
-        warnOnReplace: false,
-        warnOnUnregistered: false
-      });
+        cb(null, {username: 'user'});
+      }
 
-      return require('../src').default;
-    };
+      authGSSServerStep (context, token, cb) {
+        if (errorStage === 'step') {
+          return cb(new Error('oops'));
+        }
 
-    after(() => {
-      mockery.disable();
+        cb();
+      }
+
+      authGSSServerClean (context, cb) {
+        if (errorStage === 'clean') {
+          return cb(new Error('oops'));
+        }
+
+        cb();
+      }
+    }
+
+    /* eslint-enable class-methods-use-this */
+
+    mockery.registerMock('kerberos', {Kerberos});
+    mockery.enable({
+      useCleanCache: true,
+      warnOnReplace: false,
+      warnOnUnregistered: false
     });
 
+    return require('../src').default;
+  };
+
+  after(() => {
+    mockery.disable();
+  });
+
+  describe('exports', () => {
+    it('should expose a default function', () => {
+      expect(getSimpleKerberos()).to.be.a('function');
+    });
+  });
+
+  describe('usage', () => {
     describe('with errors', () => {
       it('should reject on load', () => {
         expect(() => getSimpleKerberos('load')).to.throw('Simple Kerberos failed to load the "kerberos" module');
