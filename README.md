@@ -27,6 +27,13 @@ simpleKerberos('my-token')
 - [kerberos](https://github.com/christkv/kerberos) - The underlying kerberos module
 - [express-kerberos](https://github.com/noamokman/express-kerberos) - One middleware to enable kerberos authentication
 
+## FAQ
+* I am getting `Simple Kerberos failed to load the "kerberos" module`
+This is the expected bahivour when the library was not able to find the kerberos module.
+Common causes:
+  * missing `kerberos` package as dependencies.
+  * `kerberos` module was not built properly and could not find the complied code
+
 ## License
 
 [MIT](LICENSE)
