@@ -54,7 +54,7 @@
     "validate-commit-msg": "^2.12.1"
   },
   "dependencies": {
-    "kerberos": "0.0.24",
+    "kerberos": "1.1.3",
     "nested-error-stacks": "^2.0.0",
     "pify": "^2.3.0"
   },
